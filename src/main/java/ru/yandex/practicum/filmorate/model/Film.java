@@ -1,12 +1,34 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDate;
 
 /**
  * Film.
  */
-@Getter
-@Setter
+@Data
+@Slf4j
 public class Film {
+
+    private Long id;
+
+    @NotBlank(message = "Имя не должно быть пустым")
+    private String name;
+
+    @Size(max = 200, message = "Размер описания не должен превышать 200 символов")
+    private String description;
+
+    private LocalDate releaseDate;
+
+    @PositiveOrZero(message = "Продолжительность фильма должна быть положительным числом")
+    private Long duration;
+
+    //Валидация даты релиза
+    @AssertTrue(message = "Дата релиза не может быть раньше 28 декабря 1895 года")
+    public boolean isReleaseDateValid() {
+        return !releaseDate.isBefore(LocalDate.of(1895, 12, 28));
+    }
 }
