@@ -21,8 +21,10 @@ public class Film {
     @Size(max = 200, message = "Размер описания не должен превышать 200 символов")
     private String description;
 
+    @NotNull(message = "Дата релиза не может быть null")
     private LocalDate releaseDate;
 
+    @NotNull(message = "Продолжительность фильма не может быть null")
     @PositiveOrZero(message = "Продолжительность фильма должна быть положительным числом")
     private Long duration;
 
