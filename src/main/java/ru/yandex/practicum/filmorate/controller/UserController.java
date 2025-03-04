@@ -27,12 +27,11 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody @Valid User user) {
+        user.setId(getNextId());
         if (user.getName() == null || user.getName().isBlank()) {
             log.info("У пользователя с ID={} не указано имя", user.getId());
             user.setName(user.getLogin());
         }
-
-        user.setId(getNextId());
         users.put(user.getId(), user);
 
         log.info("Добавлен новый пользователь: {} (ID={})", user.getLogin(), user.getId());
@@ -43,7 +42,7 @@ public class UserController {
     public User updateUser(@RequestBody @NotNull @Valid User newUser) {
         if (!users.containsKey(newUser.getId())) {
             log.warn("Попытка добавить пользователя с несуществующим ID={}", newUser.getId());
-            throw new IllegalArgumentException("Пользователь с id=" + newUser.getId() + " не найден.");
+            throw new IllegalArgumentException("Пользователь с ID=" + newUser.getId() + " не найден.");
         }
 
         User oldUser = users.get(newUser.getId());
