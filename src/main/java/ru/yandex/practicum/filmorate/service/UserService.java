@@ -73,7 +73,6 @@ public class UserService {
      * @return добавленный пользователь с установленным идентификатором
      */
     public User addUser(User user) {
-        log.info("Поступил запрос на добавление пользователя с email={}", user.getEmail());
         user.setId(idGenerator.incrementAndGet());
         User addedUser = userStorage.add(user);
         log.info("Добавлен пользователь {} с ID={}", addedUser.getName(), addedUser.getId());
@@ -109,7 +108,6 @@ public class UserService {
      * @throws UserNotFoundException если пользователь с указанным ID не найден
      */
     public void deleteUser(Long userId) {
-        log.info("Поступил запрос на удаление пользователя с ID={}", userId);
         userStorage.delete(userId);
         log.info("Удалён пользователь с ID={}", userId);
     }
@@ -126,7 +124,6 @@ public class UserService {
      * @throws IllegalArgumentException если пользователь пытается добавить в друзья самого себя
      */
     public void addFriend(Long userId, Long newFriendId) {
-        log.info("Поступил запрос на добавление в друзья пользователей с ID={} и ID={}", userId, newFriendId);
         if (userId.equals(newFriendId)) {
             throw new IllegalArgumentException("Пользователь не может добавить себя в друзья.");
         }
@@ -156,7 +153,6 @@ public class UserService {
      * @throws UserNotFoundException если один из пользователей с указанным ID не найден
      */
     public void deleteFriend(Long userId, Long friendId) {
-        log.info("Поступил запрос на удаление дружеской связи между пользователями с ID={} и ID={}", userId, friendId);
         User user = userStorage.getUserById(userId)
                 .orElseThrow(() -> new UserNotFoundException("Пользователя с ID=" + userId + " нет в списке пользователей."));
         User friend = userStorage.getUserById(friendId)
@@ -180,7 +176,6 @@ public class UserService {
      * @throws UserNotFoundException если один из пользователей с указанным ID не найден
      */
     public Set<User> getCommonFriends(Long userId1, Long userId2) {
-        log.info("Поступил запрос на поиск общих друзей пользователей с ID={} и ID={}", userId1, userId2);
         User user1 = userStorage.getUserById(userId1)
                 .orElseThrow(() -> new UserNotFoundException("Пользователь с ID=" + userId1 + " не найден."));
         User user2 = userStorage.getUserById(userId2)
@@ -205,7 +200,6 @@ public class UserService {
      * @throws UserNotFoundException если пользователь с указанным ID не найден
      */
     public Set<User> getAllUserFriends(Long userId) {
-        log.info("Поступил запрос на поиск всех друзей пользователя с ID={}", userId);
         User user = userStorage.getUserById(userId)
                 .orElseThrow(() -> new UserNotFoundException("Пользователь с ID=" + userId + " не найден."));
         Set<Long> friends = user.getFriends() != null ? user.getFriends() : Collections.emptySet();

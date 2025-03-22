@@ -120,7 +120,6 @@ public class FilmService {
      * @throws FilmNotFoundException если фильм с указанным ID не найден
      */
     public void deleteFilm(Long filmId) {
-        log.info("Поступил запрос на удаление фильма с ID={}", filmId);
         filmStorage.delete(filmId);
         log.info("Удалён фильм с ID={}", filmId);
     }
@@ -137,7 +136,6 @@ public class FilmService {
      * @throws UserNotFoundException если пользователь с указанным ID не найден
      */
     public void addLike(Long filmId, Long userId) {
-        log.info("Поступил запрос на добавление лайка фильму с ID={} от пользователя с ID={}", filmId, userId);
         Film film = filmStorage.getFilmById(filmId)
                 .orElseThrow(() -> new FilmNotFoundException("Фильма с ID=" + filmId + " нет в списке фильмов."));
         userService.getUserById(userId);
@@ -162,7 +160,6 @@ public class FilmService {
      * @throws UserNotFoundException если пользователь с указанным ID не найден
      */
     public void deleteLike(Long filmId, Long userId) {
-        log.info("Поступил запрос на удаление лайка у фильма с ID={} от пользователя с ID={}", filmId, userId);
         Film film = filmStorage.getFilmById(filmId)
                 .orElseThrow(() -> new FilmNotFoundException("Фильма с ID=" + filmId + " нет в списке фильмов."));
         userService.getUserById(userId);

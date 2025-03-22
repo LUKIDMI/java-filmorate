@@ -70,7 +70,6 @@ public class UserController {
     public ResponseEntity<User> addUser(@RequestBody @Valid User user) {
         log.info("Получен запрос на добавление пользователя с email={}", user.getEmail());
         User addedUser = userService.addUser(user);
-        log.info("Пользователь {} с ID={} успешно добавлен", addedUser.getName(), addedUser.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(addedUser);
     }
 
