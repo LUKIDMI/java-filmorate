@@ -29,7 +29,7 @@ class FilmTest {
         film.setName("Название");
         film.setDescription("Описание");
         film.setReleaseDate(LocalDate.of(2010, 7, 16));
-        film.setDuration(148L);
+        film.setDuration(148);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
         assertTrue(violations.isEmpty(), "Фильм должен быть валиден");
@@ -41,7 +41,7 @@ class FilmTest {
         film.setName("");
         film.setDescription("Описание");
         film.setReleaseDate(LocalDate.of(2020, 1, 1));
-        film.setDuration(120L);
+        film.setDuration(120);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
         assertFalse(violations.isEmpty(), "Должна быть ошибка валидации из-за пустого имени");
@@ -53,7 +53,7 @@ class FilmTest {
         film.setName("Название");
         film.setDescription("A".repeat(201)); // 201 символ
         film.setReleaseDate(LocalDate.of(2020, 1, 1));
-        film.setDuration(120L);
+        film.setDuration(120);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
         assertFalse(violations.isEmpty(), "Должна быть ошибка валидации из-за слишком длинного описания");
@@ -65,7 +65,7 @@ class FilmTest {
         film.setName("Название");
         film.setDescription("Описание");
         film.setReleaseDate(LocalDate.of(2020, 1, 1));
-        film.setDuration(-100L);
+        film.setDuration(-100);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
         assertFalse(violations.isEmpty(), "Должна быть ошибка валидации из-за отрицательной продолжительности");
@@ -77,7 +77,7 @@ class FilmTest {
         film.setName("Название");
         film.setDescription("Описание");
         film.setReleaseDate(LocalDate.of(1895, 12, 27));
-        film.setDuration(120L);
+        film.setDuration(120);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
         assertFalse(violations.isEmpty(), "Должна быть ошибка валидации из-за слишком ранней даты релиза");
