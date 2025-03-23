@@ -58,10 +58,10 @@ public class InMemoryFilmStorage implements FilmStorage {
      * @throws IllegalArgumentException если film равен null или идентификатор равен null.
      */
     private void validateFilm(Film film) {
-        if(film == null) {
+        if (film == null) {
             throw new IllegalArgumentException("Фильм не может быть null.");
         }
-        if(film.getId() == null) {
+        if (film.getId() == null) {
             throw new IllegalArgumentException("Идентификатор фильма не может быть null.");
         }
     }
