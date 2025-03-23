@@ -50,6 +50,23 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     /**
+     * Метод валидации фильма
+     * <p>
+     * Проверяет, что фильм не null и что идентификатор не равен null, иначе выбрасывается исключение.
+     *
+     * @param film объект фильма для валидации
+     * @throws IllegalArgumentException если film равен null или идентификатор равен null.
+     */
+    private void validateFilm(Film film) {
+        if(film == null) {
+            throw new IllegalArgumentException("Фильм не может быть null.");
+        }
+        if(film.getId() == null) {
+            throw new IllegalArgumentException("Идентификатор фильма не может быть null.");
+        }
+    }
+
+    /**
      * Добавляет новый фильм в хранилище.
      * <p>
      * Проверяет, что фильм с таким идентификатором ещё не существует.
@@ -61,12 +78,8 @@ public class InMemoryFilmStorage implements FilmStorage {
      */
     @Override
     public Film add(Film film) {
-        if (film == null) {
-            throw new IllegalArgumentException("Фильм не может быть null");
-        }
-        if (film.getId() == null) {
-            throw new IllegalArgumentException("Идентификатор фильма не может быть null");
-        }
+        validateFilm(film);
+
         if (films.containsKey(film.getId())) {
             throw new IllegalArgumentException("Фильм с ID=" + film.getId() + " уже существует в хранилище");
         }
@@ -87,12 +100,8 @@ public class InMemoryFilmStorage implements FilmStorage {
      */
     @Override
     public Film update(Film film) {
-        if (film == null) {
-            throw new IllegalArgumentException("Фильм не может быть null");
-        }
-        if (film.getId() == null) {
-            throw new IllegalArgumentException("Идентификатор фильма не может быть null");
-        }
+        validateFilm(film);
+
         if (!films.containsKey(film.getId())) {
             throw new FilmNotFoundException("Фильм с ID=" + film.getId() + " не найден для обновления");
         }

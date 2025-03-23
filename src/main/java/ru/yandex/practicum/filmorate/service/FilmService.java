@@ -72,6 +72,17 @@ public class FilmService {
      * @throws FilmNotFoundException если фильм с указанным ID не найден
      */
     public Film getFilmById(Long filmId) {
+        return getFilmOrThrow(filmId);
+    }
+
+    /**
+     * Возвращает фильм по указанному идентификатору или выбрасывает исключение.
+     *
+     * @param filmId идентификатор фильма, должен быть положительным
+     * @return найденный фильм
+     * @throws FilmNotFoundException если фильм с указанным ID не найден
+     */
+    private Film getFilmOrThrow(Long filmId) {
         return filmStorage.getFilmById(filmId)
                 .orElseThrow(() -> new FilmNotFoundException("Фильма с ID=" + filmId + " нет в списке фильмов."));
     }
@@ -136,8 +147,7 @@ public class FilmService {
      * @throws UserNotFoundException если пользователь с указанным ID не найден
      */
     public void addLike(Long filmId, Long userId) {
-        Film film = filmStorage.getFilmById(filmId)
-                .orElseThrow(() -> new FilmNotFoundException("Фильма с ID=" + filmId + " нет в списке фильмов."));
+        Film film = getFilmOrThrow(filmId);
         userService.getUserById(userId);
         if (film.getLikes().contains(userId)) {
             log.info("Пользователь с ID={} уже поставил лайк фильму с ID={}", userId, filmId);
@@ -160,8 +170,7 @@ public class FilmService {
      * @throws UserNotFoundException если пользователь с указанным ID не найден
      */
     public void deleteLike(Long filmId, Long userId) {
-        Film film = filmStorage.getFilmById(filmId)
-                .orElseThrow(() -> new FilmNotFoundException("Фильма с ID=" + filmId + " нет в списке фильмов."));
+        Film film = getFilmOrThrow(filmId);
         userService.getUserById(userId);
         if (!film.getLikes().contains(userId)) {
             log.info("Пользователь с ID={} не ставил лайк фильму с ID={}", userId, filmId);

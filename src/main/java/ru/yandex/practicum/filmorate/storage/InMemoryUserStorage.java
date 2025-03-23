@@ -50,6 +50,23 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     /**
+     * Метод валидации пользователя
+     * <p>
+     * Проверяет, что пользователь не равен null и что идентификатор не равен null, иначе выбрасывается исключение.
+     *
+     * @param user объект пользователя для валидации
+     * @throws IllegalArgumentException если user равен null или идентификатор равен null.
+     */
+    private void validateUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("Пользователь не может быть null");
+        }
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("Идентификатор пользователя не может быть null");
+        }
+    }
+
+    /**
      * Добавляет нового пользователя в хранилище.
      * <p>
      * Проверяет, что пользователь с таким идентификатором ещё не существует.
@@ -61,12 +78,7 @@ public class InMemoryUserStorage implements UserStorage {
      */
     @Override
     public User add(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("Пользователь не может быть null");
-        }
-        if (user.getId() == null) {
-            throw new IllegalArgumentException("Идентификатор пользователя не может быть null");
-        }
+        validateUser(user);
         if (users.containsKey(user.getId())) {
             throw new IllegalArgumentException("Пользователь с ID=" + user.getId() + " уже существует в хранилище");
         }
@@ -87,12 +99,7 @@ public class InMemoryUserStorage implements UserStorage {
      */
     @Override
     public User update(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("Пользователь не может быть null");
-        }
-        if (user.getId() == null) {
-            throw new IllegalArgumentException("Идентификатор пользователя не может быть null");
-        }
+        validateUser(user);
         if (!users.containsKey(user.getId())) {
             throw new UserNotFoundException("Пользователь с ID=" + user.getId() + " не найден для обновления");
         }
