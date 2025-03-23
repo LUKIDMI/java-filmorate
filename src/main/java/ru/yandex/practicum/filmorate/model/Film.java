@@ -1,7 +1,9 @@
 package ru.yandex.practicum.filmorate.model;
 
 import jakarta.validation.constraints.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -15,42 +17,43 @@ import java.util.Set;
  * в приложении.
  */
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Film {
 
     /**
      * Идентификатор фильма, уникальный для каждого фильма.
      */
-    private Long id;
+    Long id;
 
     /**
      * Название фильма, не может быть пустым.
      */
     @NotBlank(message = "Имя не должно быть пустым.")
-    private String name;
+    String name;
 
     /**
      * Описание фильма, максимальная длина — 200 символов.
      */
     @Size(max = 200, message = "Размер описания не должен превышать 200 символов.")
-    private String description;
+    String description;
 
     /**
      * Дата релиза фильма, не может быть null и должна быть не ранее 28 декабря 1895 года.
      */
     @NotNull(message = "Дата релиза не может быть null.")
-    private LocalDate releaseDate;
+    LocalDate releaseDate;
 
     /**
      * Продолжительность фильма в минутах, должна быть положительной или равной нулю.
      */
     @NotNull(message = "Продолжительность фильма не может быть null.")
     @PositiveOrZero(message = "Продолжительность фильма должна быть положительным числом.")
-    private int duration;
+    int duration;
 
     /**
      * Множество идентификаторов пользователей, поставивших лайк фильму.
      */
-    private Set<Long> likes;
+    Set<Long> likes;
 
     /**
      * Создаёт новый объект фильма с пустым множеством лайков.

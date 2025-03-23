@@ -1,7 +1,9 @@
 package ru.yandex.practicum.filmorate.model;
 
 import jakarta.validation.constraints.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -15,43 +17,44 @@ import java.util.Set;
  * в приложении.
  */
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
     /**
      * Идентификатор пользователя, уникальный для каждого пользователя.
      */
-    private Long id;
+    Long id;
 
     /**
      * Email пользователя, должен быть валидным и не пустым.
      */
     @NotBlank(message = "Email не может быть пустым.")
     @Email(message = "Некорректный формат email.")
-    private String email;
+    String email;
 
     /**
      * Логин пользователя, не должен быть пустым и не должен содержать пробелы.
      */
     @NotBlank(message = "Поле с логином не должно быть пустым.")
     @Pattern(regexp = "^\\S+$", message = "Логин не должен содержать пробелы.")
-    private String login;
+    String login;
 
     /**
      * Имя пользователя, может быть пустым (в таком случае используется логин).
      */
-    private String name;
+    String name;
 
     /**
      * Дата рождения пользователя, должна быть в прошлом и не null.
      */
     @NotNull(message = "Дата рождения не может быть null.")
     @Past(message = "Дата рождения не может быть в будущем.")
-    private LocalDate birthday;
+    LocalDate birthday;
 
     /**
      * Множество идентификаторов друзей пользователя.
      */
-    private Set<Long> friends;
+    Set<Long> friends;
 
     /**
      * Создаёт новый объект пользователя с пустым множеством друзей.
