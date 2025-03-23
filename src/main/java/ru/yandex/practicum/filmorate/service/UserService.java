@@ -70,11 +70,10 @@ public class UserService {
      * @return найденный пользователь
      * @throws UserNotFoundException если пользователь с указанным ID не найден
      */
-    private User getUserOrThrow(Long userId){
+    private User getUserOrThrow(Long userId) {
         return userStorage.getUserById(userId)
                 .orElseThrow(() -> new UserNotFoundException("Пользователь с ID=" + userId + " не найден."));
     }
-
 
     /**
      * Добавляет нового пользователя в хранилище.
